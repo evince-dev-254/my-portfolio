@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Github, Sun, Moon } from "lucide-react"
+import { Menu, X, Github, Sun, Moon, Terminal } from "lucide-react"
 import { useTheme } from "next-themes"
 
 export function PortfolioHeader() {
@@ -18,87 +18,103 @@ export function PortfolioHeader() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-primary/30 hover-glow">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="font-serif text-xl font-bold text-primary">Paul Kihiu</div>
+          <div className="flex items-center gap-2 font-mono text-xl font-bold text-primary">
+            <Terminal className="h-5 w-5" />
+            <span className="glitch-text" data-text="Paul Kihiu">
+              Paul Kihiu
+            </span>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 font-mono">
             <button
               onClick={() => scrollToSection("about")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
             >
-              About
+              <span className="text-secondary">$</span> about
             </button>
             <button
               onClick={() => scrollToSection("skills")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
             >
-              Skills
+              <span className="text-secondary">$</span> skills
             </button>
             <button
               onClick={() => scrollToSection("projects")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
             >
-              Projects
+              <span className="text-secondary">$</span> projects
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
             >
-              Contact
+              <span className="text-secondary">$</span> contact
             </button>
           </nav>
 
-          {/* Theme Toggle & GitHub */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="hover-glow border border-primary/30 hover:border-primary"
+            >
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
 
-            <Button variant="ghost" size="icon" asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="hover-glow border border-primary/30 hover:border-primary"
+            >
               <a href="https://github.com/kihiu254" target="_blank" rel="noopener noreferrer">
                 <Github className="h-5 w-5" />
               </a>
             </Button>
 
             {/* Mobile Menu Button */}
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden hover-glow border border-primary/30 hover:border-primary"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-border pt-4">
+          <nav className="md:hidden mt-4 pb-4 border-t border-primary/30 pt-4 font-mono">
             <div className="flex flex-col space-y-4">
               <button
                 onClick={() => scrollToSection("about")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
               >
-                About
+                <span className="text-secondary">$</span> about
               </button>
               <button
                 onClick={() => scrollToSection("skills")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
               >
-                Skills
+                <span className="text-secondary">$</span> skills
               </button>
               <button
                 onClick={() => scrollToSection("projects")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
               >
-                Projects
+                <span className="text-secondary">$</span> projects
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors hover-glow px-2 py-1 rounded"
               >
-                Contact
+                <span className="text-secondary">$</span> contact
               </button>
             </div>
           </nav>
