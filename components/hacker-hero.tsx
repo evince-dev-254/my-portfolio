@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Github, Terminal, Code, Zap } from "lucide-react"
+import { Github, Terminal, Code, Zap, Download } from "lucide-react"
 import Image from "next/image"
 
 export function HackerHero() {
@@ -20,10 +20,53 @@ export function HackerHero() {
     }
   }, [currentIndex, fullText])
 
+  const handleGithubProfile = () => {
+    window.open("https://github.com/kihiu254", "_blank", "noopener,noreferrer")
+  }
+
+  const handleDownloadCV = () => {
+    // Create a downloadable CV link - you can replace this with actual CV file
+    const cvData = `
+CURRICULUM VITAE
+Paul Kihiu
+Computer Science Student - Meru National Polytechnic
+Email: 1kihiupaul@gmail.com
+Phone: +254 112 081 866
+GitHub: github.com/kihiu254
+
+EDUCATION:
+- Diploma in Computer Science (Level 6) - Expected 2025
+- KCSE - The Kirimara Boys High School (2019-2022)
+
+TECHNICAL SKILLS:
+- Languages: HTML, CSS, JavaScript, Python, PHP
+- Tools: MySQL, Figma, VS Code
+- Soft Skills: Problem-solving, teamwork, adaptability
+
+PROJECTS:
+- LunaLuxe: Responsive e-commerce website for Kenyan fashion brand
+- Mr Trendy: Luxury fashion web platform (Team Project)
+
+LANGUAGES:
+- English (Fluent)
+- Kiswahili (Fluent)
+    `.trim()
+
+    const blob = new Blob([cvData], { type: "text/plain" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "Paul_Kihiu_CV.txt"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Matrix background effect */}
       <div className="absolute inset-0 matrix-bg opacity-30" />
+      <div className="absolute inset-0 cyber-grid opacity-20" />
 
       {/* Scanning lines effect */}
       <div className="absolute inset-0">
@@ -81,9 +124,12 @@ export function HackerHero() {
               National Polytechnic, focusing on cutting-edge web technologies and digital innovation.
             </p>
 
-            {/* Action buttons with hover effects */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="hover-glow group font-mono">
+              <Button
+                size="lg"
+                className="hover-glow group font-mono"
+                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              >
                 <Terminal className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                 View Projects
               </Button>
@@ -92,9 +138,15 @@ export function HackerHero() {
                 variant="outline"
                 size="lg"
                 className="hover-glow group font-mono border-primary/50 hover:border-primary bg-transparent"
+                onClick={handleGithubProfile}
               >
                 <Github className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
                 GitHub Profile
+              </Button>
+
+              <Button variant="secondary" size="lg" className="hover-glow group font-mono" onClick={handleDownloadCV}>
+                <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                Download CV
               </Button>
             </div>
 

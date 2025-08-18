@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import { DM_Sans, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { AnimatedBackground } from "@/components/animated-background"
+import { FloatingParticles } from "@/components/floating-particles"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -32,7 +34,9 @@ export default function RootLayout({
     <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <AnimatedBackground />
+          <FloatingParticles />
+          <div className="relative z-10">{children}</div>
         </ThemeProvider>
       </body>
     </html>
