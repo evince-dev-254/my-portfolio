@@ -1,7 +1,7 @@
 import { PortfolioHeader } from "@/components/portfolio-header"
-import { HackerHero } from "@/components/hacker-hero"
+import { HeroSection } from "@/components/hero-section"
 import { SkillsOverview } from "@/components/skills-overview"
-import { HackerProjects } from "@/components/hacker-projects"
+import { FeaturedProjects } from "@/components/featured-projects"
 import { AuthSection } from "@/components/auth-section"
 import { ContactCTA } from "@/components/contact-cta"
 
@@ -11,14 +11,18 @@ export default function Portfolio() {
       <PortfolioHeader />
 
       <main className="space-y-0">
-        <HackerHero />
+        {/* Hero Section with flower-bee inspired design */}
+        <HeroSection />
 
+        {/* Skills Overview */}
         <SkillsOverview />
 
-        <HackerProjects />
+        {/* Featured Projects Preview */}
+        <FeaturedProjects />
 
         <AuthSection />
 
+        {/* Contact Call-to-Action */}
         <ContactCTA />
       </main>
     </div>
