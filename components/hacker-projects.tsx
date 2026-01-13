@@ -4,33 +4,45 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Github, Monitor } from "lucide-react"
+import { Github, Monitor, Link as LinkIcon, ExternalLink, ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 const projects = [
   {
     id: 1,
-    title: "Luna Luxe Cine",
+    title: "Savoria Restaurant",
     description:
-      "A sophisticated e-commerce platform for a Kenyan fashion brand featuring responsive design, shopping cart integration, and seamless user experience.",
-    image: "/luna-luxe-preview.png",
-    liveUrl: "https://luna-luxe-cine-git-main-paul-kihius-projects.vercel.app/",
-    githubUrl: "https://github.com/kihiu254/luna-luxe-cine",
-    technologies: ["HTML", "CSS", "JavaScript", "Responsive Design"],
-    category: "E-commerce",
+      "A high-end restaurant platform featuring an interactive menu, reservation system, and a premium visual experience tailored for fine dining.",
+    image: "/savoria-preview.png",
+    liveUrl: "https://savoria-restaurant-nine.vercel.app/",
+    githubUrl: "#",
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "Premium UI"],
+    category: "Hospitality",
     featured: true,
   },
   {
     id: 2,
-    title: "Mr Trendy Designs",
+    title: "Leli Rentals",
     description:
-      "Luxury fashion web platform developed in collaboration with a team. Focused on UI/UX planning, visual branding, and frontend styling.",
-    image: "/mr-trendy-preview.png",
-    liveUrl: "https://mrtrendydesigns.com/",
+      "A comprehensive rental marketplace platform with advanced search, booking management, and a clean, user-centric interface.",
+    image: "/leli-preview.png",
+    liveUrl: "https://www.leli.rentals",
     githubUrl: "#",
-    technologies: ["HTML", "CSS", "JavaScript", "Team Collaboration"],
-    category: "Fashion",
+    technologies: ["React", "TypeScript", "Node.js", "Marketplace"],
+    category: "Real Estate",
     featured: true,
+  },
+  {
+    id: 3,
+    title: "Luna Luxe Cine",
+    description:
+      "Sophisticated e-commerce platform for a fashion brand featuring responsive design and seamless checkout.",
+    image: "/luna-luxe-preview.png",
+    liveUrl: "https://luna-luxe-designs.vercel.app/",
+    githubUrl: "https://github.com/kihiu254/luna-luxe-cine",
+    technologies: ["React", "CSS Modules", "E-commerce"],
+    category: "E-commerce",
+    featured: false,
   },
 ]
 
@@ -38,120 +50,89 @@ export function HackerProjects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   return (
-    <section className="py-20 relative">
-      {/* Background effects */}
-      <div className="absolute inset-0 matrix-bg opacity-20" />
-
+    <section id="projects" className="py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <div className="font-mono text-sm text-primary mb-4">
-            <span className="text-muted-foreground">$</span> ls -la /projects
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="max-w-2xl space-y-4">
+            <Badge variant="secondary" className="px-4 py-1 rounded-full text-primary bg-primary/10 border-primary/20" id="projects-badge">
+              Portfolio
+            </Badge>
+            <h2 className="text-4xl lg:text-6xl font-bold tracking-tight">
+              Crafting <span className="text-gradient">Digital Experiences</span>
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              A selection of my most recent work, ranging from bespoke restaurant platforms to complex rental marketplaces.
+            </p>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="glitch-text text-primary" data-text="Featured Projects">
-              Featured Projects
-            </span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Showcasing innovative solutions built with modern technologies and creative problem-solving
-          </p>
+
+          <Button variant="outline" size="lg" className="rounded-full hidden md:flex items-center gap-2 group">
+            View All Projects
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
 
-        {/* Projects grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <Card
+            <a
               key={project.id}
-              className="group hover-glow border-primary/30 bg-card/50 backdrop-blur-sm overflow-hidden"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block group h-full focus:outline-none"
             >
-              {/* Project image */}
-              <div className="relative h-64 overflow-hidden">
-                <Image
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {/* Overlay with scan effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                {hoveredProject === project.id && <div className="absolute inset-0 scan-line" />}
-
-                {/* Category badge */}
-                <Badge className="absolute top-4 left-4 bg-primary/90 text-primary-foreground font-mono">
-                  {project.category}
-                </Badge>
-
-                {/* Featured indicator */}
-                {project.featured && (
-                  <div className="absolute top-4 right-4">
-                    <div className="w-3 h-3 bg-secondary rounded-full animate-pulse" />
+              <Card
+                className="glass border-white/10 hover-lift overflow-hidden rounded-3xl h-full flex flex-col transition-all duration-300 group-hover:border-primary/30"
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative h-72 overflow-hidden">
+                  <Image
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <div className="bg-white/20 backdrop-blur-md rounded-full px-6 py-3 border border-white/30 text-white font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      Visit Website
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
                   </div>
-                )}
-              </div>
 
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-primary group-hover:text-secondary transition-colors">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">{project.description}</CardDescription>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
-                    <Badge key={tech} variant="outline" className="border-primary/50 text-primary font-mono text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
+                  <Badge className="absolute top-4 left-4 glass-dark text-white border-white/20 px-3 py-1 uppercase text-[10px] font-bold tracking-widest">
+                    {project.category}
+                  </Badge>
                 </div>
 
-                {/* Action buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button asChild className="flex-1 hover-glow font-mono">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <Monitor className="h-4 w-4" />
-                      Live Demo
-                    </a>
-                  </Button>
+                <CardHeader className="space-y-3 pb-4">
+                  <CardTitle className="text-2xl font-bold group-hover:text-primary transition-colors">{project.title}</CardTitle>
+                  <CardDescription className="text-base line-clamp-2 text-muted-foreground">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
 
-                  {project.githubUrl !== "#" && (
-                    <Button
-                      variant="outline"
-                      asChild
-                      className="hover-glow border-primary/50 hover:border-primary font-mono bg-transparent"
-                    >
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
-                      >
-                        <Github className="h-4 w-4" />
-                        Code
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                <CardContent className="space-y-6 mt-auto">
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 3).map((tech) => (
+                      <span key={tech} className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground px-2 py-1 bg-muted rounded-md ring-1 ring-border">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground px-2 py-1 bg-muted rounded-md ring-1 ring-border">
+                        +{project.technologies.length - 3}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between text-primary font-bold pt-4 border-t border-white/5">
+                    <span className="underline decoration-primary/30 group-hover:decoration-primary transition-all">Explore Project</span>
+                    <LinkIcon className="h-4 w-4" />
+                  </div>
+                </CardContent>
+              </Card>
+            </a>
           ))}
-        </div>
-
-        {/* Terminal-style footer */}
-        <div className="text-center mt-16">
-          <div className="font-mono text-sm text-muted-foreground">
-            <span className="text-primary">$</span> More projects loading...
-            <span className="terminal-cursor" />
-          </div>
         </div>
       </div>
     </section>

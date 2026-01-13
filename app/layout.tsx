@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AnimatedBackground />

@@ -2,54 +2,42 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Github, Terminal, Code, Zap, Download } from "lucide-react"
+import { Github, Code, Sparkles, Download, ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 export function HackerHero() {
-  const [displayText, setDisplayText] = useState("")
-  const fullText = "Paul Kihiu"
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + fullText[currentIndex])
-        setCurrentIndex((prev) => prev + 1)
-      }, 150)
-      return () => clearTimeout(timeout)
-    }
-  }, [currentIndex, fullText])
+    setMounted(true)
+  }, [])
 
-  const handleGithubProfile = () => {
-    window.open("https://github.com/kihiu254", "_blank", "noopener,noreferrer")
+  const handleGithubProfile = (username: string = "kihiu254") => {
+    window.open(`https://github.com/${username}`, "_blank", "noopener,noreferrer")
   }
 
   const handleDownloadCV = () => {
-    // Create a downloadable CV link - you can replace this with actual CV file
     const cvData = `
 CURRICULUM VITAE
 Paul Kihiu
-Computer Science Student - Meru National Polytechnic
+Software Engineer at Guru Crafts Agency
+Diploma in Computer Science - Awaiting Graduation
 Email: 1kihiupaul@gmail.com
 Phone: +254 112 081 866
 GitHub: github.com/kihiu254
-
-EDUCATION:
-- Diploma in Computer Science (Level 6) - Expected 2025
-- KCSE - The Kirimara Boys High School (2019-2022)
+GitHub 2: github.com/evince-dev-254
 
 TECHNICAL SKILLS:
-- Languages: HTML, CSS, JavaScript, Python, PHP
-- Tools: MySQL, Figma, VS Code
-- Soft Skills: Problem-solving, teamwork, adaptability
+- Languages: HTML, CSS, JavaScript, React, Next.js, Python, PHP
+- Tools: MySQL, Figma, VS Code, Git
+- Soft Skills: Problem-solving, Technical Leadership, Adaptability
 
-PROJECTS:
-- LunaLuxe: Responsive e-commerce website for Kenyan fashion brand
-- Mr Trendy: Luxury fashion web platform (Team Project)
+WORK EXPERIENCE:
+- Software Engineer @ Guru Crafts Agency
 
-LANGUAGES:
-- English (Fluent)
-- Kiswahili (Fluent)
+EDUCATION:
+- Diploma in Computer Science - Awaiting Graduation
+- KCSE - The Kirimara Boys High School (2019-2022)
     `.trim()
 
     const blob = new Blob([cvData], { type: "text/plain" })
@@ -63,108 +51,126 @@ LANGUAGES:
     URL.revokeObjectURL(url)
   }
 
-  return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 matrix-bg opacity-30" />
-      <div className="absolute inset-0 cyber-grid opacity-20" />
+  if (!mounted) return null
 
-      {/* Scanning lines effect */}
-      <div className="absolute inset-0">
-        <div className="scan-line w-full h-px bg-primary/30 absolute top-1/4" />
-        <div className="scan-line w-full h-px bg-primary/20 absolute top-2/4" />
-        <div className="scan-line w-full h-px bg-primary/30 absolute top-3/4" />
-      </div>
+  return (
+    <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-secondary/20 rounded-full blur-[120px] animate-pulse transition-all duration-1000" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Profile Image with Glitch Effect */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative">
-              <div className="w-80 h-80 rounded-lg overflow-hidden border-2 border-primary/50 hover-glow">
-                <Image
-                  src="/paul-profile.jpg"
-                  alt="Paul Kihiu"
-                  width={320}
-                  height={320}
-                  className="w-full h-full object-cover filter contrast-125 brightness-110"
-                />
-              </div>
-              {/* Glitch overlay */}
-              <div className="absolute inset-0 bg-primary/10 mix-blend-multiply rounded-lg" />
-            </div>
-          </div>
-
+        <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Content */}
-          <div className="text-center lg:text-left space-y-6">
-            {/* Terminal-style greeting */}
-            <div className="font-mono text-sm text-primary mb-4">
-              <span className="text-muted-foreground">$</span> whoami
+          <div className="flex-1 text-center lg:text-left space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-primary/20 text-primary font-medium text-sm animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              <Sparkles className="h-4 w-4" />
+              <span>Available for new opportunities</span>
             </div>
 
-            {/* Animated name with glitch effect */}
-            <h1 className="text-5xl lg:text-7xl font-bold">
-              <span className="glitch-text text-primary" data-text={displayText}>
-                {displayText}
-              </span>
-              <span className="terminal-cursor" />
+            <h1 className="text-6xl lg:text-8xl font-bold tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+              <span className="block italic font-light text-4xl lg:text-5xl text-muted-foreground mb-2">Hello, I'm</span>
+              <span className="text-gradient">Paul Kihiu</span>
             </h1>
 
-            {/* Subtitle with typing effect */}
-            <div className="text-xl lg:text-2xl text-muted-foreground font-mono">
-              <span className="text-secondary">&gt;</span> Computer Science Student
-              <br />
-              <span className="text-secondary">&gt;</span> Full-Stack Developer
-              <br />
-              <span className="text-secondary">&gt;</span> Digital Innovator
+            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400">
+              <h2 className="text-2xl lg:text-3xl font-semibold text-foreground/90">
+                Software Engineer at <span className="text-secondary">Guru Crafts Agency</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                Specializing in building high-performance, visually stunning web applications.
+                I hold a <span className="text-primary font-medium">Diploma in Computer Science</span> (Awaiting Graduation),
+                merging academic excellence with professional expertise.
+              </p>
             </div>
 
-            {/* Description */}
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              Passionate about building user-friendly, efficient, and scalable solutions. Currently studying at Meru
-              National Polytechnic, focusing on cutting-edge web technologies and digital innovation.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-600">
               <Button
                 size="lg"
-                className="hover-glow group font-mono"
+                className="bg-gradient-mesh text-white hover:opacity-90 shadow-lg shadow-primary/25 rounded-full px-8 h-14 text-lg"
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Terminal className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                View Projects
+                Explore My Work
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
 
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-glow group font-mono border-primary/50 hover:border-primary bg-transparent"
-                onClick={handleGithubProfile}
+                className="rounded-full px-8 h-14 text-lg border-2 hover:bg-muted transition-colors"
+                onClick={handleDownloadCV}
               >
-                <Github className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                GitHub Profile
-              </Button>
-
-              <Button variant="secondary" size="lg" className="hover-glow group font-mono" onClick={handleDownloadCV}>
-                <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                <Download className="mr-2 h-5 w-5" />
                 Download CV
               </Button>
+
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full w-14 h-14 hover:bg-muted transition-colors"
+                  onClick={() => handleGithubProfile("kihiu254")}
+                  title="kihiu254"
+                >
+                  <Github className="h-6 w-6" />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full w-14 h-14 hover:bg-muted transition-colors border-secondary/20 border"
+                  onClick={() => handleGithubProfile("evince-dev-254")}
+                  title="evince-dev-254"
+                >
+                  <Github className="h-6 w-6 text-secondary" />
+                </Button>
+              </div>
             </div>
 
-            {/* Tech stack indicators */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-6">
+            {/* Quick Stats/Tech */}
+            <div className="flex flex-wrap gap-8 justify-center lg:justify-start pt-12 animate-in fade-in duration-1000 delay-800">
               {[
-                { icon: Code, label: "Frontend" },
-                { icon: Terminal, label: "Backend" },
-                { icon: Zap, label: "Full-Stack" },
-              ].map(({ icon: Icon, label }) => (
-                <div
-                  key={label}
-                  className="flex items-center gap-2 px-3 py-1 rounded-md bg-card/50 border border-primary/30 hover-glow"
-                >
-                  <Icon className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-mono">{label}</span>
+                { label: "Frontend", value: "React & Next.js" },
+                { label: "Backend", value: "Node & Python" },
+                { label: "Design", value: "Figma & UI/UX" },
+              ].map((stat) => (
+                <div key={stat.label} className="space-y-1">
+                  <div className="text-sm text-muted-foreground uppercase tracking-widest">{stat.label}</div>
+                  <div className="text-lg font-bold">{stat.value}</div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Profile Image Area */}
+          <div className="flex-1 relative animate-in fade-in slide-in-from-right-10 duration-1000 delay-400">
+            <div className="relative w-72 h-72 lg:w-[450px] lg:h-[450px] mx-auto">
+              {/* Decorative Rings */}
+              <div className="absolute inset-0 border-2 border-primary/20 rounded-full animate-[spin_10s_linear_infinite]" />
+              <div className="absolute inset-2 border border-secondary/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+
+              <div className="absolute inset-4 overflow-hidden rounded-full border-4 border-background shadow-2xl">
+                <Image
+                  src="/paul-profile.jpg"
+                  alt="Paul Kihiu"
+                  fill
+                  className="object-cover transform hover:scale-110 transition-transform duration-700"
+                  priority
+                />
+              </div>
+
+              {/* Floating Badge */}
+              <div className="absolute -bottom-4 -right-4 glass rounded-2xl p-4 shadow-xl border-primary/20 animate-float">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Code className="text-primary w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-foreground">50+ Projects</div>
+                    <div className="text-xs text-muted-foreground">Successfully Delivered</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

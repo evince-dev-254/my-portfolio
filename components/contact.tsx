@@ -26,9 +26,15 @@ export function Contact() {
     },
     {
       icon: Github,
-      label: "GitHub",
+      label: "GitHub (Primary)",
       value: "github.com/kihiu254",
       href: "https://github.com/kihiu254",
+    },
+    {
+      icon: Github,
+      label: "GitHub (Secondary)",
+      value: "github.com/evince-dev-254",
+      href: "https://github.com/evince-dev-254",
     },
   ]
 

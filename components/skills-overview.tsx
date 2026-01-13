@@ -1,57 +1,62 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Code, Database, Palette, Users } from "lucide-react"
+import { Code, Database, Palette, Users, Layout } from "lucide-react"
 
 export function SkillsOverview() {
   const skillCategories = [
     {
-      title: "Programming Languages",
-      icon: Code,
-      skills: ["HTML", "CSS", "JavaScript", "Python", "PHP"],
-      color: "text-primary",
+      title: "Frontend Development",
+      icon: Layout,
+      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      gradient: "from-blue-500 to-cyan-400",
     },
     {
-      title: "Tools & Technologies",
+      title: "Backend & database",
       icon: Database,
-      skills: ["MySQL", "Figma", "VS Code", "Git"],
-      color: "text-secondary",
+      skills: ["Node.js", "Python", "PHP", "MySQL", "PostgreSQL"],
+      gradient: "from-purple-500 to-pink-400",
     },
     {
-      title: "Design Skills",
+      title: "Design & UI/UX",
       icon: Palette,
-      skills: ["UI/UX Design", "Responsive Design", "Visual Branding", "Prototyping"],
-      color: "text-accent",
+      skills: ["Figma", "Adobe XD", "Responsive Design", "Visual Branding"],
+      gradient: "from-orange-500 to-yellow-400",
     },
     {
       title: "Soft Skills",
       icon: Users,
-      skills: ["Problem-solving", "Teamwork", "Adaptability", "Attention to Detail"],
-      color: "text-primary",
+      skills: ["Team Leadership", "Problem Solving", "Agile", "Communication"],
+      gradient: "from-emerald-500 to-teal-400",
     },
   ]
 
   return (
-    <section id="skills" className="py-20 bg-muted/30">
+    <section id="skills" className="py-24 relative">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-sans text-3xl md:text-4xl font-bold mb-4">Technical Skills</h2>
-          <p className="font-serif text-lg text-muted-foreground max-w-2xl mx-auto">
-            A diverse toolkit for building modern web solutions
+        <div className="text-center mb-16 space-y-4">
+          <Badge variant="secondary" className="px-4 py-1 rounded-full text-primary bg-primary/10 border-primary/20">
+            Expertise
+          </Badge>
+          <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">Technical <span className="text-gradient">Skillset</span></h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            A comprehensive toolkit of modern technologies I use to bring complex digital visions to life.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {skillCategories.map((category, index) => (
             <Card
               key={category.title}
-              className="border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
+              className="group glass border-white/10 hover-lift overflow-hidden rounded-3xl"
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg bg-muted ${category.color}`}>
-                    <category.icon className="w-5 h-5" />
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-4">
+                  <div className={`p-3 rounded-2xl bg-gradient-to-br ${category.gradient} text-white shadow-lg`}>
+                    <category.icon className="w-6 h-6" />
                   </div>
-                  <CardTitle className="text-lg font-sans font-bold">{category.title}</CardTitle>
+                  <CardTitle className="text-xl font-bold tracking-tight">{category.title}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
@@ -60,7 +65,7 @@ export function SkillsOverview() {
                     <Badge
                       key={skill}
                       variant="secondary"
-                      className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+                      className="text-sm font-medium px-3 py-1 bg-muted hover:bg-primary hover:text-white transition-all cursor-default rounded-lg"
                     >
                       {skill}
                     </Badge>
