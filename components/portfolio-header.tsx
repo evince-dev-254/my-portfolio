@@ -4,11 +4,16 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Github, Sun, Moon, Sparkles } from "lucide-react"
 import { useTheme } from "next-themes"
+import { Logo } from "@/components/logo"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 
 export function PortfolioHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,19 +23,30 @@ export function PortfolioHeader() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const offset = 80 // Header height
-      const bodyRect = document.body.getBoundingClientRect().top
-      const elementRect = element.getBoundingClientRect().top
-      const elementPosition = elementRect - bodyRect
-      const offsetPosition = elementPosition - offset
+  const navItems = [
+    { label: "About", href: "/#about", id: "about" },
+    { label: "Skills", href: "/#skills", id: "skills" },
+    { label: "Projects", href: "/projects", id: "projects" },
+    { label: "Resume", href: "/resume", id: "resume" },
+    { label: "Contact", href: "/#contact", id: "contact" },
+  ]
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      })
+  const handleNavClick = (e: React.MouseEvent, item: typeof navItems[0]) => {
+    if (item.href.startsWith("/#") && pathname === "/") {
+      e.preventDefault()
+      const element = document.getElementById(item.id)
+      if (element) {
+        const offset = 80
+        const bodyRect = document.body.getBoundingClientRect().top
+        const elementRect = element.getBoundingClientRect().top
+        const elementPosition = elementRect - bodyRect
+        const offsetPosition = elementPosition - offset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        })
+      }
       setIsMenuOpen(false)
     }
   }
@@ -42,32 +58,24 @@ export function PortfolioHeader() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div
-            className="flex items-center gap-2 font-bold text-2xl cursor-pointer group"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          >
-            <div className="w-10 h-10 bg-gradient-mesh rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
-              <Sparkles className="h-6 w-6" />
-            </div>
-            <span className="tracking-tight">
-              Paul <span className="text-primary">Kihiu</span>
-            </span>
-          </div>
+          <Link href="/" className="flex items-center gap-2 group">
+            <Logo onClick={() => {}} />
+          </Link>
 
           <nav className="hidden md:flex items-center space-x-1">
-            {[
-              { id: "about", label: "About" },
-              { id: "skills", label: "Skills" },
-              { id: "projects", label: "Projects" },
-              { id: "contact", label: "Contact" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="px-4 py-2 rounded-full text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all text-sm font-medium"
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item)}
+                className={`px-4 py-2 rounded-full transition-all text-sm font-medium ${
+                  (pathname === item.href || (pathname === "/" && item.href.startsWith("/#")))
+                    ? "text-primary bg-primary/5"
+                    : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -106,12 +114,12 @@ export function PortfolioHeader() {
 
             <Button
               className="rounded-full px-6 bg-gradient-mesh text-white hover:opacity-90 shadow-lg shadow-primary/20 hidden md:flex"
-              onClick={() => scrollToSection("contact")}
+              onClick={(e) => handleNavClick(e, { label: "Contact", href: "/#contact", id: "contact" })}
+              asChild
             >
-              Hire Me
+              <Link href="/#contact">Hire Me</Link>
             </Button>
 
-            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
@@ -123,25 +131,20 @@ export function PortfolioHeader() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-64 mt-4 opacity-100" : "max-h-0 opacity-0"
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-[500px] mt-4 opacity-100" : "max-h-0 opacity-0"
             }`}
         >
           <div className="glass rounded-2xl p-4 flex flex-col space-y-2 border border-white/10">
-            {[
-              { id: "about", label: "About" },
-              { id: "skills", label: "Skills" },
-              { id: "projects", label: "Projects" },
-              { id: "contact", label: "Contact" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item)}
                 className="w-full text-left px-4 py-3 rounded-xl hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium"
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </div>
         </div>

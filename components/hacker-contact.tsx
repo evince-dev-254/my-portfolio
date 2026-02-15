@@ -1,14 +1,14 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react"
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Terminal, Globe } from "lucide-react"
 
 export function HackerContact() {
   const [formData, setFormData] = useState({
@@ -19,195 +19,153 @@ export function HackerContact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("[v0] Contact form submitted:", formData)
+    console.log("Contact form submitted:", formData)
   }
 
   const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "1kihiupaul@gmail.com",
-      href: "mailto:1kihiupaul@gmail.com",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+254 112 081 866",
-      href: "tel:+254112081866",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Meru, Kenya",
-      href: "#",
-    },
+    { icon: Mail, label: "Email", value: "1kihiupaul@gmail.com", href: "mailto:1kihiupaul@gmail.com" },
+    { icon: Phone, label: "Phone", value: "+254 112 081 866", href: "tel:+254112081866" },
+    { icon: MapPin, label: "Location", value: "Meru, Kenya", href: "#" },
   ]
 
-  const socialLinks = [
-    {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com/kihiu254",
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "#",
-    },
-  ]
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  }
 
   return (
-    <section className="py-20 relative">
-      {/* Background effects */}
-      <div className="absolute inset-0 matrix-bg opacity-20" />
-
+    <section id="contact" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <div className="font-mono text-sm text-primary mb-4">
-            <span className="text-muted-foreground">$</span> ./connect.sh --establish-communication
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20 space-y-6"
+        >
+          <div className="flex items-center justify-center gap-3 font-mono text-primary text-sm tracking-[0.4em] uppercase">
+            <Terminal size={16} />
+            <span>./connect.sh --establish</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="glitch-text text-primary" data-text="Initialize Contact">
-              Initialize Contact
-            </span>
+          <h2 className="text-4xl lg:text-6xl font-black tracking-tight">
+            Initialize <span className="text-primary italic">Contact</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to collaborate on innovative projects? Let's establish a secure connection and build something
-            extraordinary together.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Ready to collaborate on innovative projects? Let&apos;s establish a secure connection and build something extraordinary together.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid lg:grid-cols-2 gap-12"
+        >
           {/* Contact Information */}
-          <div className="space-y-8">
-            <Card className="border-primary/30 bg-card/50 backdrop-blur-sm hover-glow">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-primary font-mono">Contact Protocols</CardTitle>
+          <motion.div variants={itemVariants} className="space-y-8">
+            <Card className="glass border-white/5 hover:border-primary/30 transition-all duration-500 rounded-3xl group overflow-hidden">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-black tracking-tighter uppercase flex items-center gap-3">
+                  <Globe className="text-primary" size={24} />
+                  Contact Protocols
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {contactInfo.map((contact) => {
-                  const Icon = contact.icon
-                  return (
-                    <div key={contact.label} className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-mono text-sm text-muted-foreground">{contact.label}</p>
-                        {contact.href !== "#" ? (
-                          <a
-                            href={contact.href}
-                            className="text-foreground hover:text-primary transition-colors font-mono"
-                          >
-                            {contact.value}
-                          </a>
-                        ) : (
-                          <p className="text-foreground font-mono">{contact.value}</p>
-                        )}
-                      </div>
+              <CardContent className="space-y-8 pt-4">
+                {contactInfo.map((contact, i) => (
+                  <div key={contact.label} className="flex items-center gap-6 group/item">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover/item:scale-110 transition-transform neon-border">
+                      <contact.icon size={24} />
                     </div>
-                  )
-                })}
-              </CardContent>
-            </Card>
-
-            {/* Social Links */}
-            <Card className="border-primary/30 bg-card/50 backdrop-blur-sm hover-glow">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-primary font-mono">Social Networks</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-4">
-                  {socialLinks.map((social) => {
-                    const Icon = social.icon
-                    return (
-                      <Button
-                        key={social.label}
-                        variant="outline"
-                        size="lg"
-                        asChild
-                        className="hover-glow border-primary/50 hover:border-primary font-mono bg-transparent"
-                      >
-                        <a
-                          href={social.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2"
-                        >
-                          <Icon className="h-5 w-5" />
-                          {social.label}
+                    <div>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-1">{contact.label}</p>
+                      {contact.href !== "#" ? (
+                        <a href={contact.href} className="text-lg font-bold hover:text-primary transition-colors tracking-tight">
+                          {contact.value}
                         </a>
-                      </Button>
-                    )
-                  })}
-                </div>
+                      ) : (
+                        <p className="text-lg font-bold tracking-tight">{contact.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </CardContent>
             </Card>
 
-            {/* Status indicator */}
-            <div className="flex items-center gap-3 font-mono text-sm">
-              <div className="w-3 h-3 bg-secondary rounded-full animate-pulse" />
-              <span className="text-muted-foreground">Status:</span>
-              <Badge className="bg-secondary/20 text-secondary border-secondary/50">Available for Projects</Badge>
+            <div className="flex items-center gap-4 pt-6">
+              <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground px-4 py-2 rounded-full border border-white/5 bg-white/5">
+                <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                <span>Status: Available for hire</span>
+              </div>
+              <Badge variant="outline" className="text-primary border-primary/30 font-bold px-4 py-2 rounded-full uppercase text-[10px] tracking-widest">
+                Meru Node active
+              </Badge>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <Card className="border-primary/30 bg-card/50 backdrop-blur-sm hover-glow">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-primary font-mono">Send Message</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-mono text-muted-foreground">Name</label>
-                  <Input
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="bg-input border-primary/30 focus:border-primary font-mono"
-                    placeholder="Enter your name"
-                  />
-                </div>
+          <motion.div variants={itemVariants}>
+            <Card className="glass border-white/5 hover:border-primary/30 transition-all duration-500 rounded-3xl p-2 relative overflow-hidden group">
+              <CardHeader className="p-8">
+                <CardTitle className="text-2xl font-black tracking-tighter uppercase flex items-center gap-3">
+                  <Send className="text-primary" size={24} />
+                  Send Message
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-8 pb-8 pt-0">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">Identity</label>
+                       <Input
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="bg-white/5 border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl h-12 font-medium"
+                        placeholder="Your Name"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">Signal End</label>
+                      <Input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="bg-white/5 border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl h-12 font-medium"
+                        placeholder="email@example.com"
+                      />
+                    </div>
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-mono text-muted-foreground">Email</label>
-                  <Input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="bg-input border-primary/30 focus:border-primary font-mono"
-                    placeholder="your.email@domain.com"
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">Payload</label>
+                    <Textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="bg-white/5 border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl min-h-[140px] font-medium"
+                      placeholder="Describe your project or inquiry..."
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-mono text-muted-foreground">Message</label>
-                  <Textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-input border-primary/30 focus:border-primary font-mono min-h-32"
-                    placeholder="Describe your project or inquiry..."
-                  />
-                </div>
-
-                <Button type="submit" size="lg" className="w-full hover-glow font-mono">
-                  <Send className="mr-2 h-5 w-5" />
-                  Transmit Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Terminal-style footer */}
-        <div className="text-center mt-16">
-          <div className="font-mono text-sm text-muted-foreground">
-            <span className="text-primary">$</span> Connection established. Awaiting response...
-            <span className="terminal-cursor" />
-          </div>
-        </div>
+                  <Button type="submit" size="lg" className="w-full h-14 bg-gradient-mesh text-white font-black tracking-tight text-lg rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.01] transition-all group-hover:neon-glow">
+                    <Send className="mr-3 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    Transmit Data
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )

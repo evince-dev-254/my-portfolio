@@ -1,21 +1,15 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { DM_Sans, Space_Grotesk } from "next/font/google"
+import { Outfit } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AnimatedBackground } from "@/components/animated-background"
 import { FloatingParticles } from "@/components/floating-particles"
 
-const dmSans = DM_Sans({
+const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-dm-sans",
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-space-grotesk",
+  variable: "--font-outfit",
 })
 
 export const metadata: Metadata = {
@@ -23,6 +17,9 @@ export const metadata: Metadata = {
   description:
     "Modern portfolio showcasing innovative projects and technical skills by Paul Kihiu, Computer Science student at Meru National Polytechnic",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({
@@ -31,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${outfit.variable} antialiased`} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <AnimatedBackground />
